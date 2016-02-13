@@ -7,8 +7,7 @@ from sklearn.metrics import accuracy_score
 
 def clean_data(data):
     # Fill in missing ages with mean
-    mean_age = np.mean(data.Age)
-    data.Age = data.Age.fillna(mean_age)
+    data.Age = data.Age.fillna(np.mean(data.Age))
 
     # Fill in missing fare values with means of each Pclass
     data.Fare = data.Fare.map(lambda x: np.nan if x == 0 else x)
@@ -18,13 +17,14 @@ def clean_data(data):
     # Remove Nan from Cabin information
     data.Cabin = data.Cabin.fillna('Unknown')
 
-    # One hot Encode Embarked
+    # One-Hot Encoding of Embarked feature
     embarked = pd.get_dummies(data[['Embarked']])
     data = pd.concat([data.drop('Embarked', 1), embarked], axis = 1)
 
-    # One hot Encode Male/Female
+    # One-Hot Encoding of Sex feature
     sex = pd.get_dummies(data[['Sex']])
     data = pd.concat([data.drop('Sex', 1), sex], axis = 1)
+
     return data
 
 # Load data
@@ -54,8 +54,7 @@ gs.fit(X_train, y_train)
 clf = gs.best_estimator_
 
 # Predict on test split
-pred = clf.predict(X_test)
-print "Accuracy score: %f" % accuracy_score(pred, y_test)
+print("Accuracy score: %f" % accuracy_score(clf.predict(X_test), y_test))
 
 
 # Predict unlabeled test data
