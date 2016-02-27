@@ -6,6 +6,21 @@ from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import accuracy_score
 
 def clean_data(data):
+    """ Preprocesses data by doing the following:
+        Fills in missing ages and fare values
+        Removes NaN values from cabin information
+        One hot encodes embarked and sex
+
+    Parameters
+    ----------
+    data : pandas DataFrame
+        DataFrame containing passenger information such as sex, class, fare, etc.
+
+    Returns
+    -------
+    data : pandas DataFrame
+        Returns processed DataFrame, ready for fitting
+    """
     # Fill in missing ages with mean
     data.Age = data.Age.fillna(np.mean(data.Age))
 
@@ -61,4 +76,4 @@ pred = clf.predict(selected_testing_data)
 
 # Save results to file
 n = pd.DataFrame(data={'PassengerId': testing_data['PassengerId'], 'Survived': pred})
-n.to_csv('rfpredictions.csv', index=False)
+#n.to_csv('rfpredictions.csv', index=False)
