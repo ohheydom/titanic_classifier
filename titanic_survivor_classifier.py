@@ -9,7 +9,7 @@ def clean_data(data):
     """ Preprocesses data by doing the following:
         Fills in missing ages and fare values
         Removes NaN values from cabin information
-        One hot encodes embarked and sex
+        One hot encodes embarked and sex features
 
     Parameters
     ----------
@@ -76,4 +76,4 @@ pred = clf.predict(selected_testing_data)
 
 # Save results to file
 n = pd.DataFrame(data={'PassengerId': testing_data['PassengerId'], 'Survived': pred})
-#n.to_csv('rfpredictions.csv', index=False)
+n.to_csv('rfpredictions.csv', index=False)
